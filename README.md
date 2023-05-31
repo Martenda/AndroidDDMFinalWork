@@ -1,2 +1,2 @@
 # AndroidDDMFinalWork
-Final Work for the DDM discipline on college.
+Final Assignment for the DDM discipline on college.
