@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SelectTypeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_200"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnWorker"
+            style="@style/ButtonNoBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Prestador de Serviços"
+            android:textAlignment="textStart" />
+
+        <Button
+            android:id="@+id/btnCliente"
+            style="@style/ButtonNoBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cliente"
+            android:textAlignment="textStart" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/material_dynamic_neutral100"
+        android:orientation="vertical"></LinearLayout>
+
+</LinearLayout>
