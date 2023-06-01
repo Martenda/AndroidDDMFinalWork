@@ -1,6 +1,9 @@
 package com.example.taskmasters.ui.main;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -34,10 +37,14 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return mContext.getResources().getString(TAB_TITLES[position]);
+        String title = mContext.getResources().getString(TAB_TITLES[position]);
+        SpannableString spannableString = new SpannableString(title);
+
+        int color = Color.BLACK;
+
+        spannableString.setSpan(new ForegroundColorSpan(color), 0, spannableString.length(), 0);
+        return spannableString;
     }
-
-
 
     @Override
     public int getCount() {

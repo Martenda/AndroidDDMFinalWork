@@ -38,6 +38,7 @@
         app:layout_constraintTop_toBottomOf="@+id/username" />
 
     <Button
+        style="@style/ButtonNoBackground"
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,6 +54,7 @@
         app:layout_constraintVertical_bias="0.837" />
 
     <Button
+        style="@style/ButtonNoBackground"
         android:id="@+id/sign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

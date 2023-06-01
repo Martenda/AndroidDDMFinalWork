@@ -10,23 +10,33 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.taskmasters.R;
 import com.example.taskmasters.databinding.FragmentCreateUserBinding;
+import com.example.taskmasters.model.User;
+import com.example.taskmasters.ui.createUser.selectCredentials.SelectCredentialsFragment;
 import com.example.taskmasters.ui.createUser.selectData.SelectDataFragment;
 import com.example.taskmasters.ui.createUser.selectType.SelectTypeFragment;
+import com.google.android.material.snackbar.Snackbar;
 //import com.example.taskmasters.ui.map.MapsFragment;
 
 public class PlaceholderFragment extends Fragment {
 
+    private final User user = new User();
+
     private static final String ARG_SECTION_NUMBER = "section_number";
+
+    private ViewPager viewPager;
 
     private PageViewModel pageViewModel;
     private FragmentCreateUserBinding binding;
 
     private SelectTypeFragment selectTypeFragment;
     private SelectDataFragment selectDataFragment;
-//    private MapsFragment mapsFragment;
+    //    private MapsFragment mapsFragment;
+
+    private SelectCredentialsFragment selectCredentialsFragment;
 
     public static PlaceholderFragment newInstance(int index) {
         PlaceholderFragment fragment = new PlaceholderFragment();
@@ -34,6 +44,16 @@ public class PlaceholderFragment extends Fragment {
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void Callback(String option, int to) {
+        Snackbar.make(this.requireView(), option, 2000).show();
+        ;
+        viewPager.setCurrentItem(to - 1);
     }
 
     @Override
@@ -52,45 +72,21 @@ public class PlaceholderFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
+        viewPager = requireActivity().findViewById(R.id.view_pager);
         binding = FragmentCreateUserBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         if (getArguments() != null && getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
-            if (selectTypeFragment == null) {
-                selectTypeFragment = new SelectTypeFragment();
-                getChildFragmentManager().beginTransaction()
-                        .add(R.id.constraintLayout, selectTypeFragment, "Fragment1")
-                        .commit();
-            } else {
-                getChildFragmentManager().beginTransaction()
-                        .show(selectTypeFragment)
-                        .commit();
-            }
+            showSelectTypeFragment();
         }
         if (getArguments() != null && getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
-            if (selectDataFragment == null) {
-                selectDataFragment = new SelectDataFragment();
-                getChildFragmentManager().beginTransaction()
-                        .add(R.id.constraintLayout, selectDataFragment, "Fragment2")
-                        .commit();
-            } else {
-                getChildFragmentManager().beginTransaction()
-                        .show(selectDataFragment)
-                        .commit();
-            }
+            showSelectDataFragment();
         }
-//        if (getArguments() != null && getArguments().getInt(ARG_SECTION_NUMBER) == 3) {
-//            if (mapsFragment == null) {
-//                mapsFragment = new MapsFragment();
-//                getChildFragmentManager().beginTransaction()
-//                        .add(R.id.constraintLayout, mapsFragment, "Fragment3")
-//                        .commit();
-//            } else {
-//                getChildFragmentManager().beginTransaction()
-//                        .show(mapsFragment)
-//                        .commit();
-//            }
-//        }
+        if (getArguments() != null && getArguments().getInt(ARG_SECTION_NUMBER) == 3) {
+        }
+        if (getArguments() != null && getArguments().getInt(ARG_SECTION_NUMBER) == 4) {
+            showSelectCredentialsFragment();
+        }
 
         return root;
     }
@@ -118,4 +114,44 @@ public class PlaceholderFragment extends Fragment {
         }
         transaction.commit();
     }
+
+    private void showSelectTypeFragment() {
+        if (selectTypeFragment == null) {
+            selectTypeFragment = new SelectTypeFragment(this);
+            getChildFragmentManager().beginTransaction()
+                    .add(R.id.constraintLayout, selectTypeFragment, "Fragment1")
+                    .commit();
+        } else {
+            getChildFragmentManager().beginTransaction()
+                    .show(selectTypeFragment)
+                    .commit();
+        }
+    }
+
+    private void showSelectDataFragment() {
+        if (selectDataFragment == null) {
+            selectDataFragment = new SelectDataFragment(this);
+            getChildFragmentManager().beginTransaction()
+                    .add(R.id.constraintLayout, selectDataFragment, "Fragment2")
+                    .commit();
+        } else {
+            getChildFragmentManager().beginTransaction()
+                    .show(selectDataFragment)
+                    .commit();
+        }
+    }
+
+    private void showSelectCredentialsFragment() {
+        if (selectCredentialsFragment == null) {
+            selectCredentialsFragment = new SelectCredentialsFragment(this);
+            getChildFragmentManager().beginTransaction()
+                    .add(R.id.constraintLayout, selectCredentialsFragment, "Fragment4")
+                    .commit();
+        } else {
+            getChildFragmentManager().beginTransaction()
+                    .show(selectCredentialsFragment)
+                    .commit();
+        }
+    }
+
 }

@@ -10,8 +10,8 @@ import kotlin.jvm.functions.Function1;
 
 public class PageViewModel extends ViewModel {
 
-    private MutableLiveData<Integer> mIndex = new MutableLiveData<>();
-    private LiveData<String> mText = Transformations.map(mIndex, integer -> "Hello world from section: " + integer);
+    private final MutableLiveData<Integer> mIndex = new MutableLiveData<>();
+    private final LiveData<String> mText = Transformations.map(mIndex, integer -> "Hello world from section: " + integer);
 
     public void setIndex(int index) {
         mIndex.setValue(index);
