@@ -78,7 +78,7 @@ public class SelectDataFragment extends Fragment {
                 return;
             }
             try {
-                user.setGender(GenderOptions.valueOf(gender);
+                user.setGender(GenderOptions.valueOf(gender));
             } catch (Exception e) {
                 father.Callback("Genero inválido",2);
                 return;
