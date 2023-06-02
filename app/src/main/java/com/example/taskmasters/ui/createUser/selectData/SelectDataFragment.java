@@ -44,7 +44,6 @@ public class SelectDataFragment extends Fragment {
 
 
         Button btnCadastrar = root.findViewById(R.id.buttonProcedeToStep3);
-        btnCadastrar.setEnabled(true);
         btnCadastrar.setOnClickListener(v -> {
 
             TextView nameTextView = root.findViewById(R.id.editTextNome);
@@ -61,27 +60,29 @@ public class SelectDataFragment extends Fragment {
             try {
                 user.setName(name);
             } catch (NameSizeException e) {
-                father.Callback("Nome inválido",2);
+                father.Callback("Campo nome: " + e.toString(),2);
                 return;
             }
             try {
                 user.setSurname(surname);
             } catch (NameSizeException e) {
-                father.Callback("Sobrenome inválido",2);
+                father.Callback("Campo sobrenome: " + e.toString(),2);
                 return;
             }
             try {
                 if (age.length() > 0)
                     user.setAge(Integer.parseInt(age));
             } catch (AgeException e) {
-                father.Callback("Idade inválida",2);
+                father.Callback(e.toString(),2);
                 return;
             }
-            try {
-                user.setGender(GenderOptions.valueOf(gender));
-            } catch (Exception e) {
-                father.Callback("Genero inválido",2);
-                return;
+            if (gender.equals("Masculino")){
+                user.setGender(GenderOptions.MALE);
+            }
+            if (gender.equals("Feminino")){
+                user.setGender(GenderOptions.FEMALE);
+            }else{
+                user.setGender(GenderOptions.OTHER);
             }
 
             father.Callback("Sucesso",3);

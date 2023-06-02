@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">TaskMasters</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_home">Tela principal</string>
+    <string name="title_tasks">Serviços</string>
+    <string name="title_notifications">Notificações</string>
+    <string name="title_activity_login">Entrar</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha</string>
     <string name="action_sign_in">Entrar</string>

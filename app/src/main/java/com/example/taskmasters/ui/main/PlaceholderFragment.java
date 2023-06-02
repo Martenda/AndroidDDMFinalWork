@@ -23,7 +23,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class PlaceholderFragment extends Fragment {
 
-    private final User user = new User();
+    public final User user = new User();
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -82,9 +82,9 @@ public class PlaceholderFragment extends Fragment {
         if (getArguments() != null && getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
             showSelectDataFragment();
         }
+//        if (getArguments() != null && getArguments().getInt(ARG_SECTION_NUMBER) == 3) {
+//        }
         if (getArguments() != null && getArguments().getInt(ARG_SECTION_NUMBER) == 3) {
-        }
-        if (getArguments() != null && getArguments().getInt(ARG_SECTION_NUMBER) == 4) {
             showSelectCredentialsFragment();
         }
 
