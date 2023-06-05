@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.example.taskmasters.data.LoginDataSource;
 import com.example.taskmasters.data.LoginRepository;
+import com.example.taskmasters.model.user.dao.UserDAO;
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.
@@ -13,12 +14,18 @@ import com.example.taskmasters.data.LoginRepository;
  */
 public class LoginViewModelFactory implements ViewModelProvider.Factory {
 
+    private final UserDAO userDAO;
+
+    public LoginViewModelFactory(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
+
     @NonNull
     @Override
     @SuppressWarnings("unchecked")
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(LoginViewModel.class)) {
-            return (T) new LoginViewModel(LoginRepository.getInstance(new LoginDataSource()));
+            return (T) new LoginViewModel(LoginRepository.getInstance(new LoginDataSource(userDAO)));
         } else {
             throw new IllegalArgumentException("Unknown ViewModel class");
         }

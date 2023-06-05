@@ -27,6 +27,9 @@ import com.example.taskmasters.CreateUser;
 import com.example.taskmasters.MainActivity;
 import com.example.taskmasters.R;
 import com.example.taskmasters.databinding.ActivityLoginBinding;
+import com.example.taskmasters.model.AppDatabase;
+import com.example.taskmasters.model.DatabaseClient;
+import com.example.taskmasters.model.user.dao.UserDAO;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -40,7 +43,11 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
+        DatabaseClient databaseClient = DatabaseClient.getInstance(getApplicationContext());
+        AppDatabase appDatabase = databaseClient.getAppDatabase();
+        UserDAO userDAO = appDatabase.userDao();
+
+        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory(userDAO))
                 .get(LoginViewModel.class);
 
         final EditText usernameEditText = binding.username;
@@ -77,13 +84,11 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if (loginResult.getSuccess() != null) {
                     updateUiWithUser(loginResult.getSuccess());
+                    Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+                    LoginActivity.this.startActivity(myIntent);
+                    setResult(Activity.RESULT_OK);
+                    finish();
                 }
-                setResult(Activity.RESULT_OK);
-
-                Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
-                LoginActivity.this.startActivity(myIntent);
-
-                finish();
             }
         });
 
