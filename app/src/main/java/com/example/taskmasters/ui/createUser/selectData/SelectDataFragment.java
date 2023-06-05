@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +16,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.taskmasters.R;
-import com.example.taskmasters.exceptions.AgeException;
-import com.example.taskmasters.exceptions.NameSizeException;
-import com.example.taskmasters.model.GenderOptions;
-import com.example.taskmasters.model.User;
+import com.example.taskmasters.model.user.GenderOptions;
+import com.example.taskmasters.model.user.User;
 import com.example.taskmasters.ui.main.PlaceholderFragment;
+import com.google.android.material.snackbar.Snackbar;
 
 public class SelectDataFragment extends Fragment {
 
@@ -56,36 +54,39 @@ public class SelectDataFragment extends Fragment {
             String age = ageTextView.getText().toString();
             String gender = genderSpinner.getSelectedItem().toString();
 
-            User user = father.getUser();
-            try {
-                user.setName(name);
-            } catch (NameSizeException e) {
-                father.Callback("Campo nome: " + e.toString(),2);
+            if (name.isEmpty()) {
+                father.Callback("O nome é obrigatório", 2);
                 return;
-            }
-            try {
-                user.setSurname(surname);
-            } catch (NameSizeException e) {
-                father.Callback("Campo sobrenome: " + e.toString(),2);
-                return;
-            }
-            try {
-                if (age.length() > 0)
-                    user.setAge(Integer.parseInt(age));
-            } catch (AgeException e) {
-                father.Callback(e.toString(),2);
-                return;
-            }
-            if (gender.equals("Masculino")){
-                user.setGender(GenderOptions.MALE);
-            }
-            if (gender.equals("Feminino")){
-                user.setGender(GenderOptions.FEMALE);
-            }else{
-                user.setGender(GenderOptions.OTHER);
             }
 
-            father.Callback("Sucesso",3);
+            if (surname.isEmpty()) {
+                father.Callback("O sobrenome é obrigatório", 2);
+                return;
+            }
+
+            if (age.isEmpty()) {
+                father.Callback("Insira a sua idade", 2);
+                return;
+            }else if(Integer.parseInt(age) < 18){
+                father.Callback("Você deve ter no minímo 18 anos", 2);
+                return;
+            }
+
+            father.getUser().setName(name);
+            father.getUser().setSurname(surname);
+            father.getUser().setAge(Integer.parseInt(age));
+
+
+            // Default
+            father.getUser().setGender(GenderOptions.OTHER);
+            if (gender.equals("Masculino")) {
+                father.getUser().setGender(GenderOptions.MALE);
+            }
+            if (gender.equals("Feminino")) {
+                father.getUser().setGender(GenderOptions.FEMALE);
+            }
+
+            father.Callback("Sucesso", 3);
         });
 
         return root;

@@ -16,29 +16,23 @@ public class PlaceholderContent {
     /**
      * An array of sample (placeholder) items.
      */
-    public static final List<PlaceholderItem> ITEMS = new ArrayList<PlaceholderItem>();
+    public static final List<TaskPlaceholder> ITEMS = new ArrayList<>();
 
-    /**
-     * A map of sample (placeholder) items, by ID.
-     */
-    public static final Map<String, PlaceholderItem> ITEM_MAP = new HashMap<String, PlaceholderItem>();
 
     private static final int COUNT = 25;
 
     static {
-        // Add some sample items.
         for (int i = 1; i <= COUNT; i++) {
             addItem(createPlaceholderItem(i));
         }
     }
 
-    private static void addItem(PlaceholderItem item) {
+    private static void addItem(TaskPlaceholder item) {
         ITEMS.add(item);
-        ITEM_MAP.put(item.id, item);
     }
 
-    private static PlaceholderItem createPlaceholderItem(int position) {
-        return new PlaceholderItem(String.valueOf(position), "Item " + position, makeDetails(position));
+    private static TaskPlaceholder createPlaceholderItem(int position) {
+        return new TaskPlaceholder(String.valueOf(position), "Item " + position, makeDetails(position), "Serviços gerais");
     }
 
     private static String makeDetails(int position) {
@@ -53,20 +47,27 @@ public class PlaceholderContent {
     /**
      * A placeholder item representing a piece of content.
      */
-    public static class PlaceholderItem {
-        public final String id;
-        public final String content;
-        public final String details;
+    public static class TaskPlaceholder {
+        public final String price;
+        public final String title;
+        public final String description;
+        public final String category;
 
-        public PlaceholderItem(String id, String content, String details) {
-            this.id = id;
-            this.content = content;
-            this.details = details;
+        public TaskPlaceholder(String price, String title, String description, String category) {
+            this.price = price;
+            this.title = title;
+            this.description = description;
+            this.category = category;
         }
 
         @Override
         public String toString() {
-            return content;
+            return "TaskPlaceholder{" +
+                    "price='" + price + '\'' +
+                    ", title='" + title + '\'' +
+                    ", description='" + description + '\'' +
+                    ", category='" + category + '\'' +
+                    '}';
         }
     }
 }

@@ -1,29 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="15dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/purple_500"
-        android:orientation="vertical">
+        android:background="@color/material_dynamic_neutral90"
+        android:backgroundTint="@color/purple_200">
 
         <TextView
-            android:id="@+id/content"
-            android:layout_width="match_parent"
+            android:id="@+id/title_task"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:textAppearance="?attr/textAppearanceListItem" />
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/white"
+            android:padding="15dp"
+            android:text="title"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread_inside" />
 
         <TextView
-            android:id="@+id/item_number"
-            android:layout_width="match_parent"
+            android:id="@+id/description_task"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:textAppearance="?attr/textAppearanceListItem" />
-    </LinearLayout>
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="15dp"
+            android:background="@color/white"
+            android:padding="10dp"
+            android:text="description"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_task" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="right"
+            android:text="price"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description_task" />
+
+        <TextView
+            android:id="@+id/dollar_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="right"
+            android:text="R$"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description_task" />
+
+        <TextView
+            android:id="@+id/category_task"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/white"
+            android:padding="10dp"
+            android:text="TextView"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/price"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description_task" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

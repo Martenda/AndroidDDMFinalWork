@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 
+import com.example.taskmasters.model.user.User;
 import com.example.taskmasters.ui.login.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -40,7 +41,7 @@ public class CreateUser extends AppCompatActivity {
             actionBar.setTitle("Registrar");
         }
 
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), new User());
         ViewPager viewPager = binding.viewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = binding.tabs;

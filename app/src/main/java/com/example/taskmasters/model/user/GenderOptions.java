@@ -1,4 +1,4 @@
-package com.example.taskmasters.model;
+package com.example.taskmasters.model.user;
 
 public enum GenderOptions {
     MALE(1), FEMALE(2), OTHER(3);

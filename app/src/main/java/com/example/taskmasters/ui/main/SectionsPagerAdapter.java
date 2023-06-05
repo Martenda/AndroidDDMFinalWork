@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.taskmasters.R;
+import com.example.taskmasters.model.user.User;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -22,15 +23,17 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3};
     private final Context mContext;
+    private final User user;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm) {
+    public SectionsPagerAdapter(Context context, FragmentManager fm, User user) {
         super(fm);
         mContext = context;
+        this.user = user;
     }
 
     @Override
     public Fragment getItem(int position) {
-        PlaceholderFragment fragment = PlaceholderFragment.newInstance(position + 1);
+        PlaceholderFragment fragment = PlaceholderFragment.newInstance(position + 1, user);
         return fragment;
     }
 

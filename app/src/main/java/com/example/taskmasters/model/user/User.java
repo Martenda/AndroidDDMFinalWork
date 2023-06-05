@@ -1,9 +1,13 @@
-package com.example.taskmasters.model;
+package com.example.taskmasters.model.user;
 
-import com.example.taskmasters.exceptions.AgeException;
-import com.example.taskmasters.exceptions.NameSizeException;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = "users")
 public class User {
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private UserType userType;
     private String name;
     private String surname;
@@ -24,10 +28,7 @@ public class User {
         return name;
     }
 
-    public void setName(String name) throws NameSizeException {
-        if (name.length() <= NameSizeException.MINIMUM_LENGTH || name.length() >= NameSizeException.MAXIMUM_LENGTH){
-            throw new NameSizeException(name);
-        }
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -35,9 +36,7 @@ public class User {
         return surname;
     }
 
-    public void setSurname(String surname) throws NameSizeException {
-        if (surname.length() <= NameSizeException.MINIMUM_LENGTH || surname.length() >= NameSizeException.MAXIMUM_LENGTH)
-            throw new NameSizeException(surname);
+    public void setSurname(String surname){
         this.surname = surname;
     }
 
@@ -45,9 +44,7 @@ public class User {
         return age;
     }
 
-    public void setAge(int age) throws AgeException {
-        if (age < 18)
-            throw new AgeException();
+    public void setAge(int age){
         this.age = age;
     }
 
@@ -73,5 +70,27 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userType=" + userType +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", age=" + age +
+                ", gender=" + gender +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

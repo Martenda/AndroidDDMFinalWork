@@ -11,6 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.taskmasters.databinding.FragmentHomeBinding;
+import com.example.taskmasters.model.AppDatabase;
+import com.example.taskmasters.model.DatabaseClient;
+import com.example.taskmasters.model.user.dao.UserDAO;
 
 public class HomeFragment extends Fragment {
 
@@ -18,8 +21,15 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+
+        DatabaseClient databaseClient = DatabaseClient.getInstance(requireContext().getApplicationContext());
+        AppDatabase appDatabase = databaseClient.getAppDatabase();
+        UserDAO userDao = appDatabase.userDao();
+
+        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        homeViewModel.setUserDAO(userDao);
+
+        homeViewModel.fetchUserData();
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();

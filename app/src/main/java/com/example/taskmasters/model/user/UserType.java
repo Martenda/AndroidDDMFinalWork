@@ -1,4 +1,4 @@
-package com.example.taskmasters.model;
+package com.example.taskmasters.model.user;
 
 public enum UserType {
     CONSUMER(1), SERVICE_PROVIDER(2);

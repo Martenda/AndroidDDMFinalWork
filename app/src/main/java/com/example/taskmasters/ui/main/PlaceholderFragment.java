@@ -14,7 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.taskmasters.R;
 import com.example.taskmasters.databinding.FragmentCreateUserBinding;
-import com.example.taskmasters.model.User;
+import com.example.taskmasters.model.user.User;
 import com.example.taskmasters.ui.createUser.selectCredentials.SelectCredentialsFragment;
 import com.example.taskmasters.ui.createUser.selectData.SelectDataFragment;
 import com.example.taskmasters.ui.createUser.selectType.SelectTypeFragment;
@@ -23,7 +23,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class PlaceholderFragment extends Fragment {
 
-    public final User user = new User();
+    public final User user;
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -38,8 +38,12 @@ public class PlaceholderFragment extends Fragment {
 
     private SelectCredentialsFragment selectCredentialsFragment;
 
-    public static PlaceholderFragment newInstance(int index) {
-        PlaceholderFragment fragment = new PlaceholderFragment();
+    public PlaceholderFragment(User user) {
+        this.user = user;
+    }
+
+    public static PlaceholderFragment newInstance(int index, User user) {
+        PlaceholderFragment fragment = new PlaceholderFragment(user);
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -52,7 +56,6 @@ public class PlaceholderFragment extends Fragment {
 
     public void Callback(String option, int to) {
         Snackbar.make(this.requireView(), option, 2000).show();
-        ;
         viewPager.setCurrentItem(to - 1);
     }
 

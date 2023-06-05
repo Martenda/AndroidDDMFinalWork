@@ -2,8 +2,6 @@ package com.example.taskmasters.ui.createUser.selectType;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,15 +14,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.taskmasters.R;
-import com.example.taskmasters.model.UserType;
+import com.example.taskmasters.model.user.UserType;
 import com.example.taskmasters.ui.main.PlaceholderFragment;
-
-import java.util.Objects;
 
 public class SelectTypeFragment extends Fragment {
 
     private SelectTypeViewModel mViewModel;
     private final PlaceholderFragment father;
+
     public SelectTypeFragment(PlaceholderFragment father) {
         this.father = father;
     }
@@ -41,6 +38,15 @@ public class SelectTypeFragment extends Fragment {
 
         Button buttonWorker = root.findViewById(R.id.btnWorker);
         Button buttonClient = root.findViewById(R.id.btnCliente);
+
+        if (father.getUser().getUserType() == UserType.CONSUMER) {
+            buttonWorker.setEnabled(true);
+            buttonClient.setEnabled(false);
+        }
+        if (father.getUser().getUserType() == UserType.SERVICE_PROVIDER) {
+            buttonWorker.setEnabled(false);
+            buttonClient.setEnabled(true);
+        }
 
         buttonWorker.setOnClickListener(e -> {
             father.getUser().setUserType(UserType.SERVICE_PROVIDER);

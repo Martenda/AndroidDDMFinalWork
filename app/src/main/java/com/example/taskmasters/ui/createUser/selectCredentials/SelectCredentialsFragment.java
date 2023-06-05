@@ -17,11 +17,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.taskmasters.CreateUser;
 import com.example.taskmasters.MainActivity;
 import com.example.taskmasters.R;
-import com.example.taskmasters.ui.login.LoginActivity;
+import com.example.taskmasters.model.AppDatabase;
+import com.example.taskmasters.model.DatabaseClient;
+import com.example.taskmasters.model.user.dao.UserDAO;
 import com.example.taskmasters.ui.main.PlaceholderFragment;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Objects;
+
+import kotlinx.coroutines.Dispatchers;
 
 public class SelectCredentialsFragment extends Fragment {
 
@@ -33,11 +39,11 @@ public class SelectCredentialsFragment extends Fragment {
 
     private Button createAccountButton;
 
-    public SelectCredentialsFragment(PlaceholderFragment father) {
+    public SelectCredentialsFragment(PlaceholderFragment father){
         this.father = father;
     }
 
-    public static SelectCredentialsFragment newInstance(PlaceholderFragment father) {
+    public static SelectCredentialsFragment newInstance(PlaceholderFragment father){
         return new SelectCredentialsFragment(father);
     }
 
@@ -52,7 +58,21 @@ public class SelectCredentialsFragment extends Fragment {
         TextView tv_password = root.findViewById(R.id.passwordCreate);
 
         createAccountButton.setOnClickListener(v -> {
-            // TODO callback, and create user
+
+            DatabaseClient databaseClient = DatabaseClient.getInstance(this.getContext());
+            AppDatabase appDatabase = databaseClient.getAppDatabase();
+            UserDAO userDao = appDatabase.userDao();
+
+            father.getUser().setEmail(emailText);
+            father.getUser().setPassword(passwordText);
+
+
+            try {
+                userDao.insertUser(father.getUser());
+            } catch (Exception ignored) {
+
+            }
+
             Intent intent = new Intent(this.getContext(), MainActivity.class);
             startActivity(intent);
         });
