@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -25,11 +26,15 @@ import android.widget.Toast;
 
 import com.example.taskmasters.CreateUser;
 import com.example.taskmasters.MainActivity;
-import com.example.taskmasters.R;
 import com.example.taskmasters.databinding.ActivityLoginBinding;
 import com.example.taskmasters.model.AppDatabase;
 import com.example.taskmasters.model.DatabaseClient;
 import com.example.taskmasters.model.user.dao.UserDAO;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -43,6 +48,17 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
+        boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
+        initializeLoginProcess();
+        if (isLoggedIn) {
+            String email = sharedPreferences.getString("email", "");
+            String password = sharedPreferences.getString("password", "");
+            loginViewModel.login(email, password);
+        }
+    }
+
+    private void initializeLoginProcess() {
         DatabaseClient databaseClient = DatabaseClient.getInstance(getApplicationContext());
         AppDatabase appDatabase = databaseClient.getAppDatabase();
         UserDAO userDAO = appDatabase.userDao();
@@ -83,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                     showLoginFailed(loginResult.getError());
                 }
                 if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
+                    saveLoginState(loginResult.getSuccess());
                     Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
                     LoginActivity.this.startActivity(myIntent);
                     setResult(Activity.RESULT_OK);
@@ -139,15 +155,24 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
 
-    private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    private void saveLoginState(LoggedInUserView success) {
+        EditText usernameEditText = binding.username;
+        EditText passwordEditText = binding.password;
+        SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (!(sharedPreferences.getBoolean("isLoggedIn", false))){
+            editor.putBoolean("isLoggedIn", true);
+            editor.putString("email", String.valueOf(usernameEditText.getText()));
+            editor.putString("password", String.valueOf(passwordEditText.getText()));
+            editor.putString("display_name", success.getDisplayName());
+            editor.apply();
+        }
     }
 }

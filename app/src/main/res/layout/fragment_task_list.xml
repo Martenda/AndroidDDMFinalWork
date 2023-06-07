@@ -8,6 +8,8 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
+    android:layout_marginTop="64dp"
+    android:layout_marginBottom="64dp"
     app:layoutManager="LinearLayoutManager"
     tools:context=".ui.mainFragments.tasks.TaskFragment"
     tools:listitem="@layout/fragment_task" />

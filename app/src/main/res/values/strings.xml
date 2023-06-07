@@ -16,7 +16,7 @@
     <string name="title_activity_settings">SettingsActivity</string>
 
     <!-- Preference Titles -->
-    <string name="messages_header">Disponibilidade</string>
+    <string name="messages_header">Visibilidade</string>
     <string name="sync_header">Sync</string>
 
     <!-- Messages Preferences -->

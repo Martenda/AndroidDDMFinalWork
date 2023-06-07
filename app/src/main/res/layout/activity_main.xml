@@ -6,6 +6,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/main_activity_toolBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/main_activity_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="TextView"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/main_activity_toolBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/main_activity_toolBar" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/main_activity_toolBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@mipmap/ic_launcher_round" />
+    </FrameLayout>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="0dp"
@@ -23,7 +60,7 @@
     <fragment
         android:id="@+id/nav_host_fragment_activity_main"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@id/nav_view"
@@ -41,6 +78,7 @@
         android:layout_marginBottom="24dp"
         android:clickable="true"
         android:focusable="true"
+        app:backgroundTint="@color/teal_200"
         app:layout_constraintBottom_toTopOf="@+id/nav_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_manage" />
@@ -53,6 +91,7 @@
         android:layout_marginBottom="28dp"
         android:clickable="true"
         android:focusable="true"
+        app:backgroundTint="@color/teal_200"
         app:layout_constraintBottom_toTopOf="@+id/fab_settings"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
@@ -65,6 +104,7 @@
         android:layout_marginBottom="28dp"
         android:clickable="true"
         android:focusable="true"
+        app:backgroundTint="@color/teal_200"
         app:layout_constraintBottom_toTopOf="@+id/fab_settings"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_view" />
@@ -77,6 +117,7 @@
         android:layout_marginBottom="112dp"
         android:clickable="true"
         android:focusable="true"
+        app:backgroundTint="@color/teal_200"
         app:layout_constraintBottom_toTopOf="@+id/fab_settings"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_delete" />

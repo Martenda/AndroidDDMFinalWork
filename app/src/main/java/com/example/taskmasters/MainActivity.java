@@ -2,9 +2,13 @@ package com.example.taskmasters;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.TextView;
 
+import com.example.taskmasters.data.model.LoggedInUser;
 import com.example.taskmasters.databinding.ActivityMainBinding;
+import com.example.taskmasters.ui.login.LoggedInUserView;
 import com.example.taskmasters.ui.mainFragments.tasks.createService.CreateServiceActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -28,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fab_create_service;
     private FloatingActionButton fab_mark_notifications_as_seen;
     private FloatingActionButton fab_clear_seen_notifications;
+    private FloatingActionButton fab_access_settings;
 
 
     @Override
@@ -46,23 +51,45 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        FloatingActionButton fab = findViewById(R.id.fab_settings);
-        fab.setOnClickListener(e -> {
+        try {
+            handleComponentsInstantiation();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    private void handleComponentsInstantiation() throws Exception {
+
+        // Get logged user
+        TextView userNameDisplay = findViewById(R.id.main_activity_user);
+        SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
+        String newDisplayText = "Bem vindo, " + sharedPreferences.getString("display_name", "");
+        userNameDisplay.setText(newDisplayText.length() <= 25 ? newDisplayText + ".." : newDisplayText.substring(0, 25) + "..");
+
+
+        // Instantiate components
+        fab_access_settings = findViewById(R.id.fab_settings);
+        fab_create_service = findViewById(R.id.fab_create_task);
+        fab_mark_notifications_as_seen = findViewById(R.id.fab_mark_not_as_seen);
+        fab_clear_seen_notifications = findViewById(R.id.fab_clear_all_seen_noti);
+        fab_create_service.hide();
+        fab_mark_notifications_as_seen.hide();
+        fab_clear_seen_notifications.hide();
+
+        // Add event listeners
+        fab_access_settings.setOnClickListener(e -> {
             Intent myIntent = new Intent(MainActivity.this, SettingsActivity.class);
             MainActivity.this.startActivity(myIntent);
         });
 
-        fab_create_service = findViewById(R.id.fab_create_task);
+
         fab_create_service.setOnClickListener(e -> {
             Intent myIntent = new Intent(MainActivity.this, CreateServiceActivity.class);
             MainActivity.this.startActivity(myIntent);
         });
-        fab_create_service.hide();
 
-        fab_mark_notifications_as_seen = findViewById(R.id.fab_mark_not_as_seen);
-        fab_clear_seen_notifications = findViewById(R.id.fab_clear_all_seen_noti);
-        fab_mark_notifications_as_seen.hide();
-        fab_clear_seen_notifications.hide();
     }
 
     @Override

@@ -2,10 +2,12 @@ package com.example.taskmasters.ui.login;
 
 import com.example.taskmasters.model.user.UserType;
 
+import java.io.Serializable;
+
 /**
  * Class exposing authenticated user details to the UI.
  */
-class LoggedInUserView {
+public class LoggedInUserView implements Serializable, AutoCloseable {
     private final String displayName;
     private final UserType userType;
     //... other data fields that may be accessible to the UI
@@ -15,7 +17,16 @@ class LoggedInUserView {
         this.userType = userType;
     }
 
-    String getDisplayName() {
+    public String getDisplayName() {
         return displayName;
+    }
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    @Override
+    public void close() throws Exception {
+
     }
 }
