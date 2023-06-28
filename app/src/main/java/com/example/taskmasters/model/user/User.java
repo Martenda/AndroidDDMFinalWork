@@ -3,6 +3,11 @@ package com.example.taskmasters.model.user;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.taskmasters.model.task.Task;
+
+import java.util.Arrays;
+import java.util.List;
+
 @Entity(tableName = "users")
 public class User {
 
@@ -15,13 +20,15 @@ public class User {
     private GenderOptions gender;
     private String email;
     private String password;
+    private byte[] image;
 
-    public User(UserType userType, String name, String surname, String email, String password) {
+    public User(UserType userType, String name, String surname, String email, String password, byte[] image, List<Task> favoriteTasks) {
         this.userType = userType;
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.password = password;
+        this.image = image;
     }
 
     public User() {
@@ -83,6 +90,14 @@ public class User {
         this.password = password;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -94,6 +109,7 @@ public class User {
                 ", gender=" + gender +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", image=" + Arrays.toString(image) +
                 '}';
     }
 
@@ -104,4 +120,5 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
+
 }

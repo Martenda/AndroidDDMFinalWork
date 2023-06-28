@@ -31,11 +31,6 @@ import com.example.taskmasters.model.AppDatabase;
 import com.example.taskmasters.model.DatabaseClient;
 import com.example.taskmasters.model.user.dao.UserDAO;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
@@ -172,6 +167,8 @@ public class LoginActivity extends AppCompatActivity {
             editor.putString("email", String.valueOf(usernameEditText.getText()));
             editor.putString("password", String.valueOf(passwordEditText.getText()));
             editor.putString("display_name", success.getDisplayName());
+            editor.putInt("user_type", success.getUserType().type);
+            editor.putInt("user_id", success.getId());
             editor.apply();
         }
     }

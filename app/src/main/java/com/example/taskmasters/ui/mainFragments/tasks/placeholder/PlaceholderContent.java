@@ -1,29 +1,49 @@
 package com.example.taskmasters.ui.mainFragments.tasks.placeholder;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import android.content.Context;
+import android.content.SharedPreferences;
 
-/**
- * Helper class for providing sample content for user interfaces created by
- * Android template wizards.
- * <p>
- * TODO: Replace all uses of this class before publishing your app.
- */
+import androidx.preference.PreferenceManager;
+
+import com.example.taskmasters.model.DatabaseClient;
+import com.example.taskmasters.model.task.Category;
+import com.example.taskmasters.model.task.Task;
+import com.example.taskmasters.model.task.dao.TaskDAO;
+import com.example.taskmasters.model.user.UserType;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class PlaceholderContent {
 
-    /**
-     * An array of sample (placeholder) items.
-     */
     public static final List<TaskPlaceholder> ITEMS = new ArrayList<>();
 
+    public static void loadTasksFromDatabase(Context context) {
+        DatabaseClient databaseClient = DatabaseClient.getInstance(context);
+        TaskDAO taskDAO = databaseClient.getAppDatabase().taskDao();
 
-    private static final int COUNT = 25;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        int userId = sharedPreferences.getInt("user_id", 0);
+        int userType = sharedPreferences.getInt("user_type", 1);
 
-    static {
-        for (int i = 1; i <= COUNT; i++) {
-            addItem(createPlaceholderItem(i));
+        List<Task> tasks;
+
+        if (userType == UserType.CONSUMER.type) {
+            tasks = taskDAO.getTasksByUserId(userId);
+        } else {
+            tasks = taskDAO.getAllTasks();
+        }
+
+        ITEMS.clear();
+
+        for (Task task : tasks) {
+            TaskPlaceholder item = new TaskPlaceholder(
+                    String.valueOf(task.getPrice()),
+                    task.getTitle(),
+                    task.getDetails(),
+                    task.getCategory()
+            );
+            addItem(item);
         }
     }
 
@@ -31,29 +51,13 @@ public class PlaceholderContent {
         ITEMS.add(item);
     }
 
-    private static TaskPlaceholder createPlaceholderItem(int position) {
-        return new TaskPlaceholder(String.valueOf(position), "Item " + position, makeDetails(position), "Serviços gerais");
-    }
-
-    private static String makeDetails(int position) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Details about Item: ").append(position);
-        for (int i = 0; i < position; i++) {
-            builder.append("\nMore details information here.");
-        }
-        return builder.toString();
-    }
-
-    /**
-     * A placeholder item representing a piece of content.
-     */
     public static class TaskPlaceholder {
         public final String price;
         public final String title;
         public final String description;
-        public final String category;
+        public final Category category;
 
-        public TaskPlaceholder(String price, String title, String description, String category) {
+        public TaskPlaceholder(String price, String title, String description, Category category) {
             this.price = price;
             this.title = title;
             this.description = description;

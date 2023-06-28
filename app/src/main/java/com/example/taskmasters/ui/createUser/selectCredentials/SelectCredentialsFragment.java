@@ -23,11 +23,6 @@ import com.example.taskmasters.model.AppDatabase;
 import com.example.taskmasters.model.DatabaseClient;
 import com.example.taskmasters.model.user.dao.UserDAO;
 import com.example.taskmasters.ui.main.PlaceholderFragment;
-import com.google.android.material.snackbar.Snackbar;
-
-import java.util.Objects;
-
-import kotlinx.coroutines.Dispatchers;
 
 public class SelectCredentialsFragment extends Fragment {
 

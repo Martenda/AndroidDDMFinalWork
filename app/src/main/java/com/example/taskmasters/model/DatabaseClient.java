@@ -10,7 +10,7 @@ public class DatabaseClient {
     private final AppDatabase appDatabase;
 
     private DatabaseClient(Context context) {
-        appDatabase = Room.databaseBuilder(context, AppDatabase.class, "task-masters-db2").allowMainThreadQueries().build();
+        appDatabase = Room.databaseBuilder(context, AppDatabase.class, "task-masters-db-x2").allowMainThreadQueries().build();
     }
 
     public static synchronized DatabaseClient getInstance(Context context) {

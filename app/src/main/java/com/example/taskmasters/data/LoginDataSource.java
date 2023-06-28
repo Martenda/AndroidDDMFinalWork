@@ -29,6 +29,7 @@ public class LoginDataSource {
                 return new Result.Error(new IOException("Invalid username or password"));
             }
         } catch (Exception e) {
+            System.out.println(e);
             return new Result.Error(new IOException("Error logging in", e));
         }
     }
