@@ -25,6 +25,7 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.PreferenceManager;
 
 import android.Manifest;
 import android.content.Intent;
@@ -165,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
         public MainOnDestinationChangedListener(MainActivity mainActivity) {
             parentView = mainActivity;
         }
-
 
         public static MainOnDestinationChangedListener getInstance(MainActivity mainActivity) {
             if (instance != null) {
@@ -313,7 +313,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return bitmap;
     }
-
-
-
 }

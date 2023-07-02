@@ -1,6 +1,9 @@
 package com.example.taskmasters.ui.mainFragments.tasks;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -64,7 +67,7 @@ public class TaskFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new TaskRecyclerViewAdapter(PlaceholderContent.ITEMS));
+            recyclerView.setAdapter(new TaskRecyclerViewAdapter(PlaceholderContent.ITEMS, this.getContext()));
             PlaceholderContent.loadTasksFromDatabase(this.getContext());
         }
 

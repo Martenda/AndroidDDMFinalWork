@@ -32,9 +32,7 @@ import java.util.Objects;
 public class CreateServiceFragment extends Fragment {
 
     private TaskDAO taskDAO;
-
     private CreateServiceViewModel mViewModel;
-
     public static CreateServiceFragment newInstance() {
         return new CreateServiceFragment();
     }
@@ -43,7 +41,6 @@ public class CreateServiceFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(CreateServiceViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     @Nullable
@@ -110,6 +107,4 @@ public class CreateServiceFragment extends Fragment {
                 return null;
         }
     }
-
-
 }

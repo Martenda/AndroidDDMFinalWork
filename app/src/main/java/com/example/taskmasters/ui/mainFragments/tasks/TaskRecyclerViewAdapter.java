@@ -3,31 +3,34 @@ package com.example.taskmasters.ui.mainFragments.tasks;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.taskmasters.R;
 import com.example.taskmasters.databinding.FragmentTaskBinding;
+import com.example.taskmasters.model.user.UserType;
 import com.example.taskmasters.ui.mainFragments.tasks.placeholder.PlaceholderContent.TaskPlaceholder;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
 public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
 
     private final List<TaskPlaceholder> mValues;
+    private final Context mContext;
 
-    public TaskRecyclerViewAdapter(List<TaskPlaceholder> items) {
+    public TaskRecyclerViewAdapter(List<TaskPlaceholder> items, Context context) {
         mValues = items;
+        mContext = context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        return new ViewHolder(FragmentTaskBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
-
+        return new ViewHolder(FragmentTaskBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false), mContext);
     }
 
     @Override
@@ -53,22 +56,32 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
         public final TextView mPricePlaceholder;
         public TaskPlaceholder mItem;
 
-        public ViewHolder(FragmentTaskBinding binding) {
+        private final Context context;
+
+        public ViewHolder(FragmentTaskBinding binding, Context context) {
             super(binding.getRoot());
             mPrice = binding.price;
             mTitle = binding.titleTask;
             mDescription = binding.descriptionTask;
             mCategory = binding.categoryTask;
             mPricePlaceholder = binding.dollarPlaceholder;
+            this.context = context;
+
+            SharedPreferences sharedPreferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
+            int userId = sharedPreferences.getInt("user_id", 0);
+            int userType = sharedPreferences.getInt("user_type", 1);
 
             binding.taskContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println("hi");
+                    if (userType == UserType.CONSUMER.type) {
+                        Snackbar.make(v, "Contratar Serviço", 2000).show();
+                    } else {
+                        Snackbar.make(v, "Editar Serviço", 2000).show();
+                    }
                 }
             });
         }
-
 
         @NonNull
         @Override

@@ -22,9 +22,12 @@ public class PlaceholderContent {
         DatabaseClient databaseClient = DatabaseClient.getInstance(context);
         TaskDAO taskDAO = databaseClient.getAppDatabase().taskDao();
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences sharedPreferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
         int userId = sharedPreferences.getInt("user_id", 0);
         int userType = sharedPreferences.getInt("user_type", 1);
+
+        System.out.println(userId);
+        System.out.println(userType);
 
         List<Task> tasks;
 
