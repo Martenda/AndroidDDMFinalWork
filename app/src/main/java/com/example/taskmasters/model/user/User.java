@@ -1,5 +1,4 @@
 package com.example.taskmasters.model.user;
-import java.util.Arrays;
 
 public class User {
 
@@ -11,9 +10,9 @@ public class User {
     private GenderOptions gender;
     private String email;
     private String password;
-    private byte[] image;
+    private String image;
 
-    public User(UserType userType, String name, String surname, String email, String password, byte[] image) {
+    public User(UserType userType, String name, String surname, String email, String password, String image) {
         this.userType = userType;
         this.name = name;
         this.surname = surname;
@@ -81,11 +80,11 @@ public class User {
         this.password = password;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -100,7 +99,7 @@ public class User {
                 ", gender=" + gender +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", image=" + Arrays.toString(image) +
+                ", image=" + image +
                 '}';
     }
 

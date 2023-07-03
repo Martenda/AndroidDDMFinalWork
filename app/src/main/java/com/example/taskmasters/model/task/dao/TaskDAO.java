@@ -17,8 +17,8 @@ public class TaskDAO {
     private DatabaseReference taskRef;
 
     public interface TaskListCallback {
-        void onUserListLoaded(List<Task> taskList);
-        void onUserListError(DatabaseError databaseError);
+        void onTaskListLoaded(List<Task> taskList);
+        void onTaskListError(DatabaseError databaseError);
     }
 
     public interface TaskCallback {
@@ -43,6 +43,10 @@ public class TaskDAO {
         taskRef.child(task.getId()).setValue(task);
     }
 
+    public void deleteTaskById(String taskId) {
+        taskRef.child(taskId).removeValue();
+    }
+
     public void getAllTasks(final TaskListCallback callback) {
         List<Task> tasks = new ArrayList<>();
         taskRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -52,17 +56,17 @@ public class TaskDAO {
                     Task task = taskSnapshot.getValue(Task.class);
                     tasks.add(task);
                 }
-                callback.onUserListLoaded(tasks);
+                callback.onTaskListLoaded(tasks);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                callback.onUserListError(databaseError);
+                callback.onTaskListError(databaseError);
             }
         });
     }
 
-    public List<Task> getTasksByUserId(String userId) {
+    public List<Task> getTasksByUserId(String userId, final TaskListCallback callback) {
         List<Task> tasks = new ArrayList<>();
         Query query = taskRef.orderByChild("userId").equalTo(userId);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -72,11 +76,12 @@ public class TaskDAO {
                     Task task = taskSnapshot.getValue(Task.class);
                     tasks.add(task);
                 }
+                    callback.onTaskListLoaded(tasks);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle database error
+                callback.onTaskListError(databaseError);
             }
         });
         return tasks;

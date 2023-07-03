@@ -41,4 +41,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="update_task_text">Atualizar</string>
     <string name="create_task_task">Criar</string>
+    <string name="welcome_text">\"Bem vindo, \"</string>
 </resources>

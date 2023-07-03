@@ -6,9 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import android.util.Patterns;
 
-import com.example.taskmasters.data.LoginRepository;
-import com.example.taskmasters.data.Result;
-import com.example.taskmasters.data.model.LoggedInUser;
+import com.example.taskmasters.model.user.dao.LoggedInUser;
 import com.example.taskmasters.R;
 import com.example.taskmasters.model.user.User;
 import com.example.taskmasters.model.user.dao.UserDAO;
@@ -20,10 +18,8 @@ public class LoginViewModel extends ViewModel {
 
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
-    private LoginRepository loginRepository;
 
-    LoginViewModel(LoginRepository loginRepository) {
-        this.loginRepository = loginRepository;
+    LoginViewModel() {
     }
 
     LiveData<LoginFormState> getLoginFormState() {

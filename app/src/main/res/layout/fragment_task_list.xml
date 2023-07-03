@@ -11,5 +11,5 @@
     android:layout_marginTop="64dp"
     android:layout_marginBottom="64dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".ui.mainFragments.tasks.TaskFragment"
+    tools:context=".ui.main.tasks.TaskFragment"
     tools:listitem="@layout/fragment_task" />

@@ -16,6 +16,15 @@ import java.util.List;
 public class UserDAO {
     private DatabaseReference userRef;
 
+    public interface UserListCallback {
+        void onUserListLoaded(List<User> userList);
+        void onUserListError(DatabaseError databaseError);
+    }
+
+    public interface UserCallback {
+        void onUserLoaded(User user);
+        void onUserError(DatabaseError databaseError);
+    }
     public UserDAO() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         userRef = database.getReference("users");
@@ -28,10 +37,6 @@ public class UserDAO {
         userRef.child(userId).setValue(user);
     }
 
-    public interface UserListCallback {
-        void onUserListLoaded(List<User> userList);
-        void onUserListError(DatabaseError databaseError);
-    }
 
     public void getAllUsers(UserListCallback callback) {
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -54,23 +59,21 @@ public class UserDAO {
         });
     }
 
-    public User getUserById(String userId) {
+    public void getUserById(String userId, final UserCallback callback) {
         final User[] user = new User[1];
 
         Query query = userRef.child(userId);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                user[0] = dataSnapshot.getValue(User.class);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                callback.onUserLoaded(dataSnapshot.getValue(User.class));
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Handle the error
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                callback.onUserError(databaseError);
             }
         });
-
-        return user[0];
     }
 
     public void updateUser(User user) {

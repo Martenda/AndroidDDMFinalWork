@@ -24,9 +24,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.taskmasters.CreateUser;
-import com.example.taskmasters.MainActivity;
+import com.example.taskmasters.ui.signIn.SignInActivity;
 import com.example.taskmasters.databinding.ActivityLoginBinding;
+import com.example.taskmasters.ui.main.MainActivity;
 import com.example.taskmasters.model.user.dao.UserDAO;
 
 public class LoginActivity extends AppCompatActivity {
@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
     private void initializeLoginProcess() {
         UserDAO userDAO = new UserDAO();
 
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory(userDAO))
+        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
         final EditText usernameEditText = binding.username;
@@ -142,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
         signButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, CreateUser.class);
+                Intent intent = new Intent(LoginActivity.this, SignInActivity.class);
                 startActivity(intent);
             }
         });
