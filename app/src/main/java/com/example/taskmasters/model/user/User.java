@@ -1,18 +1,9 @@
 package com.example.taskmasters.model.user;
-
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
-import com.example.taskmasters.model.task.Task;
-
 import java.util.Arrays;
-import java.util.List;
 
-@Entity(tableName = "users")
 public class User {
 
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+    private String id;
     private UserType userType;
     private String name;
     private String surname;
@@ -22,7 +13,7 @@ public class User {
     private String password;
     private byte[] image;
 
-    public User(UserType userType, String name, String surname, String email, String password, byte[] image, List<Task> favoriteTasks) {
+    public User(UserType userType, String name, String surname, String email, String password, byte[] image) {
         this.userType = userType;
         this.name = name;
         this.surname = surname;
@@ -54,7 +45,7 @@ public class User {
         return surname;
     }
 
-    public void setSurname(String surname){
+    public void setSurname(String surname) {
         this.surname = surname;
     }
 
@@ -62,7 +53,7 @@ public class User {
         return age;
     }
 
-    public void setAge(int age){
+    public void setAge(int age) {
         this.age = age;
     }
 
@@ -101,7 +92,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", userType=" + userType +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
@@ -113,12 +104,11 @@ public class User {
                 '}';
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
-
 }

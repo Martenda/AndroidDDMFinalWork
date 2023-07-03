@@ -11,9 +11,9 @@ public class LoggedInUserView implements Serializable, AutoCloseable {
     private final String displayName;
     private final UserType userType;
 
-    private final int id;
+    private final String id;
 
-    LoggedInUserView(String displayName, UserType userType, int id) {
+    LoggedInUserView(String displayName, UserType userType, String id) {
         this.displayName = displayName;
         this.userType = userType;
         this.id = id;
@@ -27,7 +27,7 @@ public class LoggedInUserView implements Serializable, AutoCloseable {
         return userType;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

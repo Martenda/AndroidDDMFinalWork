@@ -80,6 +80,8 @@ public class SettingsActivity extends AppCompatActivity {
             editor.putString("email", "");
             editor.putString("password", "");
             editor.putString("display_name", "");
+            editor.putInt("user_type", 0);
+            editor.putString("user_id", "none");
             editor.apply();
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

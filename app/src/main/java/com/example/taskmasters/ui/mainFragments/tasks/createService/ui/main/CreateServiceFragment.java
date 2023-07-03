@@ -1,10 +1,7 @@
 package com.example.taskmasters.ui.mainFragments.tasks.createService.ui.main;
 
-import static android.content.Context.MODE_PRIVATE;
-
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -21,13 +18,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.taskmasters.R;
-import com.example.taskmasters.model.DatabaseClient;
 import com.example.taskmasters.model.task.Category;
 import com.example.taskmasters.model.task.Task;
 import com.example.taskmasters.model.task.dao.TaskDAO;
-import com.example.taskmasters.model.user.UserType;
+import com.google.firebase.database.DatabaseError;
 
-import java.util.Objects;
+import java.util.List;
 
 public class CreateServiceFragment extends Fragment {
 
@@ -36,6 +32,15 @@ public class CreateServiceFragment extends Fragment {
     public static CreateServiceFragment newInstance() {
         return new CreateServiceFragment();
     }
+
+    public static CreateServiceFragment newInstance(String taskId) {
+        CreateServiceFragment fragment = new CreateServiceFragment();
+        Bundle args = new Bundle();
+        args.putString("taskId", taskId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,10 +55,19 @@ public class CreateServiceFragment extends Fragment {
         
         View root = inflater.inflate(R.layout.fragment_create_service, container, false);
 
-        DatabaseClient databaseClient = DatabaseClient.getInstance(getContext());
-        taskDAO = databaseClient.getAppDatabase().taskDao();
+        taskDAO = new TaskDAO();
 
         Button buttonCreate = root.findViewById(R.id.buttonCreate);
+
+        assert getArguments() != null;
+        String taskId = getArguments().getString("taskId", "none");
+        if (!taskId.equals("none")) {
+            loadTask(taskId, root);
+            buttonCreate.setText(R.string.update_task_text);
+        }else{
+            buttonCreate.setText(R.string.create_task_task);
+        }
+
         buttonCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,9 +100,37 @@ public class CreateServiceFragment extends Fragment {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
         int userId = sharedPreferences.getInt("user_id", 0);
         task.setUserId(userId);
-        taskDAO.insertTask(task);
+
+        String taskId = getArguments().getString("taskId", "none");
+        if (!taskId.equals("none")) {
+            task.setId(taskId);
+            taskDAO.updateTask(task);
+        } else {
+            taskDAO.insertTask(task);
+        }
 
         requireActivity().finish();
+    }
+
+    private void loadTask(String taskId, View root) {
+        EditText editTextTitle = root.findViewById(R.id.editTextTitle);
+        EditText editTextDescription = root.findViewById(R.id.editTextDescription);
+        EditText editTextPrice = root.findViewById(R.id.editTextPrice);
+        Spinner spinnerCategory = root.findViewById(R.id.spinnerCategory);
+        taskDAO.getTaskById(taskId, new TaskDAO.TaskCallback() {
+            @Override
+            public void onTaskLoad(Task task) {
+                editTextTitle.setText(task.getTitle());
+                editTextDescription.setText(task.getDetails());
+                editTextPrice.setText(String.valueOf(task.getPrice()));
+                spinnerCategory.setSelection(mapStringToCategoryInt(task.getCategory().toString()));
+            }
+
+            @Override
+            public void onTaskLoadError(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private Category mapStringToCategory(String categoryString) {
@@ -105,6 +147,23 @@ public class CreateServiceFragment extends Fragment {
                 return Category.CONSERTO_DE_ELETRONICOS;
             default:
                 return null;
+        }
+    }
+
+    private int mapStringToCategoryInt(String categoryString) {
+        switch (categoryString.toUpperCase()) {
+            case "GERAL":
+                return 0;
+            case "ENCANADOR":
+                return 1;
+            case "MARCENEIRO":
+                return 2;
+            case "FRETE":
+                return 3;
+            case "CONSERTO DE ELETRÔNICOS":
+                return 4;
+            default:
+                return 0;
         }
     }
 }

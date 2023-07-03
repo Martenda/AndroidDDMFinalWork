@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 
 import com.example.taskmasters.R;
 import com.example.taskmasters.ui.mainFragments.tasks.placeholder.PlaceholderContent;
+import com.google.firebase.database.DatabaseError;
 
 /**
  * A fragment representing a list of Items.
@@ -67,8 +68,17 @@ public class TaskFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new TaskRecyclerViewAdapter(PlaceholderContent.ITEMS, this.getContext()));
-            PlaceholderContent.loadTasksFromDatabase(this.getContext());
+            PlaceholderContent.loadTasksFromDatabase(this.getContext(), new PlaceholderContent.PlaceholderCallback() {
+                @Override
+                public void onTasksLoaded() {
+                    recyclerView.setAdapter(new TaskRecyclerViewAdapter(PlaceholderContent.ITEMS, context));
+                }
+
+                @Override
+                public void onTasksError(DatabaseError databaseError) {
+
+                }
+            });
         }
 
         return view;

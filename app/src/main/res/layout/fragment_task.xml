@@ -11,7 +11,8 @@
         android:id="@+id/taskContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/material_dynamic_neutral90"
+        android:alpha="15"
+        android:background="@android:drawable/dialog_holo_light_frame"
         android:backgroundTint="@color/purple_200">
 
         <TextView

@@ -19,8 +19,6 @@ import android.widget.TextView;
 
 import com.example.taskmasters.MainActivity;
 import com.example.taskmasters.R;
-import com.example.taskmasters.model.AppDatabase;
-import com.example.taskmasters.model.DatabaseClient;
 import com.example.taskmasters.model.user.dao.UserDAO;
 import com.example.taskmasters.ui.main.PlaceholderFragment;
 
@@ -54,22 +52,18 @@ public class SelectCredentialsFragment extends Fragment {
 
         createAccountButton.setOnClickListener(v -> {
 
-            DatabaseClient databaseClient = DatabaseClient.getInstance(this.getContext());
-            AppDatabase appDatabase = databaseClient.getAppDatabase();
-            UserDAO userDao = appDatabase.userDao();
+            UserDAO userDAO = new UserDAO();
 
             father.getUser().setEmail(emailText);
             father.getUser().setPassword(passwordText);
 
-
             try {
-                userDao.insertUser(father.getUser());
-            } catch (Exception ignored) {
-
+                userDAO.insertUser(father.getUser());
+                Intent intent = new Intent(this.getContext(), MainActivity.class);
+                startActivity(intent);
+            } catch (Exception notIgnored) {
+                System.out.println(notIgnored);
             }
-
-            Intent intent = new Intent(this.getContext(), MainActivity.class);
-            startActivity(intent);
         });
 
         tv_email.addTextChangedListener(new TextWatcher() {

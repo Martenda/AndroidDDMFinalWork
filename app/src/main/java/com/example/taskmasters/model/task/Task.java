@@ -1,18 +1,13 @@
 package com.example.taskmasters.model.task;
 
 import androidx.annotation.NonNull;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
-@Entity(tableName = "tasks")
 public class Task {
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+    private String id;
     private String title;
     private String details;
     private Category category;
     private double price;
-
     private int userId;
 
     public Task(String title, String details, Category category, double price, int userId) {
@@ -27,11 +22,11 @@ public class Task {
 
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

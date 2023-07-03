@@ -27,8 +27,6 @@ import android.widget.Toast;
 import com.example.taskmasters.CreateUser;
 import com.example.taskmasters.MainActivity;
 import com.example.taskmasters.databinding.ActivityLoginBinding;
-import com.example.taskmasters.model.AppDatabase;
-import com.example.taskmasters.model.DatabaseClient;
 import com.example.taskmasters.model.user.dao.UserDAO;
 
 public class LoginActivity extends AppCompatActivity {
@@ -54,9 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initializeLoginProcess() {
-        DatabaseClient databaseClient = DatabaseClient.getInstance(getApplicationContext());
-        AppDatabase appDatabase = databaseClient.getAppDatabase();
-        UserDAO userDAO = appDatabase.userDao();
+        UserDAO userDAO = new UserDAO();
 
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory(userDAO))
                 .get(LoginViewModel.class);
@@ -168,7 +164,7 @@ public class LoginActivity extends AppCompatActivity {
             editor.putString("password", String.valueOf(passwordEditText.getText()));
             editor.putString("display_name", success.getDisplayName());
             editor.putInt("user_type", success.getUserType().type);
-            editor.putInt("user_id", success.getId());
+            editor.putString("user_id", success.getId());
             editor.apply();
         }
     }

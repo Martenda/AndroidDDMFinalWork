@@ -2,19 +2,10 @@ package com.example.taskmasters.ui.mainFragments.tasks.createService;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 
 import com.example.taskmasters.R;
-import com.example.taskmasters.model.DatabaseClient;
-import com.example.taskmasters.model.task.Category;
-import com.example.taskmasters.model.task.Task;
-import com.example.taskmasters.model.task.dao.TaskDAO;
 import com.example.taskmasters.ui.mainFragments.tasks.createService.ui.main.CreateServiceFragment;
 
 public class CreateServiceActivity extends AppCompatActivity {
@@ -24,8 +15,9 @@ public class CreateServiceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_service);
         if (savedInstanceState == null) {
+            String taskId = getIntent().getStringExtra("taskId");
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, CreateServiceFragment.newInstance())
+                    .replace(R.id.container, CreateServiceFragment.newInstance(taskId))
                     .commitNow();
         }
 

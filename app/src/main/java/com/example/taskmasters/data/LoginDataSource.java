@@ -2,8 +2,8 @@ package com.example.taskmasters.data;
 
 import com.example.taskmasters.data.model.LoggedInUser;
 import com.example.taskmasters.model.user.User;
-import com.example.taskmasters.model.user.UserType;
 import com.example.taskmasters.model.user.dao.UserDAO;
+import com.google.firebase.database.DatabaseError;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,15 +38,14 @@ public class LoginDataSource {
     }
 
     private User authenticateUser(String username, String password) {
-        List<User> users = userDAO.getAllUsers();
-        System.out.println(users);
-        for (User user : users) {
-            String userEmail = user.getEmail();
-            String userPassword = user.getPassword();
-            if (userEmail != null && userPassword != null && userEmail.equals(username) && userPassword.equals(password)) {
-                return user;
-            }
-        }
+//        List<User> userList = userDAO.getAllUsers();
+//        for (User user : userList) {
+//            String userEmail = user.getEmail();
+//            String userPassword = user.getPassword();
+//            if (userEmail != null && userPassword != null && userEmail.equals(username) && userPassword.equals(password)) {
+//                return user;
+//            }
+//        }
         return null;
     }
 }

@@ -7,18 +7,18 @@ import com.example.taskmasters.model.user.UserType;
  */
 public class LoggedInUser {
 
-    private final int userId;
+    private final String userId;
     private final String displayName;
 
     private final UserType userType;
 
-    public LoggedInUser(int userId, String displayName, UserType userType) {
+    public LoggedInUser(String userId, String displayName, UserType userType) {
         this.userId = userId;
         this.displayName = displayName;
         this.userType = userType;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 

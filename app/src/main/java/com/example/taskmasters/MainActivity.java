@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.taskmasters.databinding.ActivityMainBinding;
-import com.example.taskmasters.model.DatabaseClient;
 import com.example.taskmasters.model.user.User;
 import com.example.taskmasters.model.user.UserType;
 import com.example.taskmasters.model.user.dao.UserDAO;
@@ -25,14 +24,10 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.preference.PreferenceManager;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.os.Build;
-import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
@@ -101,9 +96,9 @@ public class MainActivity extends AppCompatActivity {
         fab_clear_seen_notifications.hide();
 
         // Load user image
-        int userId = sharedPreferences.getInt("user_id", -1);
-        if (userId != -1) {
-            UserDAO userDAO = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().userDao();
+        String userId = sharedPreferences.getString("user_id", "none");
+        if (!userId.equals("none")) {
+            UserDAO userDAO = new UserDAO();
             User user = userDAO.getUserById(userId);
             if (user != null && user.getImage() != null) {
                 BitmapFactory.Options options = new BitmapFactory.Options();
@@ -249,9 +244,9 @@ public class MainActivity extends AppCompatActivity {
 
                 // Update the user's image in the database
                 SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
-                int userId = sharedPreferences.getInt("user_id", -1);
-                if (userId != -1) {
-                    UserDAO userDAO = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().userDao();
+                String userId = sharedPreferences.getString("user_id", "none");
+                if (!userId.equals("none")) {
+                    UserDAO userDAO = new UserDAO();
                     User user = userDAO.getUserById(userId);
                     if (user != null) {
                         user.setImage(imageBytes);

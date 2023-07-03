@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.taskmasters.databinding.FragmentTaskBinding;
 import com.example.taskmasters.model.user.UserType;
+import com.example.taskmasters.ui.mainFragments.tasks.createService.CreateServiceActivity;
 import com.example.taskmasters.ui.mainFragments.tasks.placeholder.PlaceholderContent.TaskPlaceholder;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -68,7 +70,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
             this.context = context;
 
             SharedPreferences sharedPreferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
-            int userId = sharedPreferences.getInt("user_id", 0);
+            String userId = sharedPreferences.getString("user_id", "none");
             int userType = sharedPreferences.getInt("user_type", 1);
 
             binding.taskContainer.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +79,10 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
                     if (userType == UserType.CONSUMER.type) {
                         Snackbar.make(v, "Contratar Serviço", 2000).show();
                     } else {
-                        Snackbar.make(v, "Editar Serviço", 2000).show();
+                        String taskId = mItem.id;
+                        Intent intent = new Intent(context, CreateServiceActivity.class);
+                        intent.putExtra("taskId", taskId);
+                        context.startActivity(intent);
                     }
                 }
             });

@@ -10,6 +10,11 @@ import com.example.taskmasters.data.LoginRepository;
 import com.example.taskmasters.data.Result;
 import com.example.taskmasters.data.model.LoggedInUser;
 import com.example.taskmasters.R;
+import com.example.taskmasters.model.user.User;
+import com.example.taskmasters.model.user.dao.UserDAO;
+import com.google.firebase.database.DatabaseError;
+
+import java.util.List;
 
 public class LoginViewModel extends ViewModel {
 
@@ -30,14 +35,28 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void login(String username, String password) {
-        Result<LoggedInUser> result = loginRepository.login(username, password);
+        UserDAO userDAO = new UserDAO();
+        userDAO.getAllUsers(new UserDAO.UserListCallback() {
+            @Override
+            public void onUserListLoaded(List<User> userList) {
+                for (User user : userList) {
+                    String userEmail = user.getEmail();
+                    String userPassword = user.getPassword();
+                    if (userEmail != null && userPassword != null && userEmail.equals(username) && userPassword.equals(password)) {
+                        LoggedInUser loggedInUser = new LoggedInUser(user.getId(), (user.getName() + " " + user.getSurname()), user.getUserType());
+                        System.out.println("logged");
+                        loginResult.setValue(new LoginResult(new LoggedInUserView(loggedInUser.getDisplayName(), loggedInUser.getUserType(), loggedInUser.getUserId())));
+                        return;
+                    }
+                }
+                loginResult.setValue(new LoginResult(R.string.login_failed));
+            }
 
-        if (result instanceof Result.Success) {
-            LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName(), data.getUserType(), data.getUserId())));
-        } else {
-            loginResult.setValue(new LoginResult(R.string.login_failed));
-        }
+            @Override
+            public void onUserListError(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void loginDataChanged(String username, String password) {
