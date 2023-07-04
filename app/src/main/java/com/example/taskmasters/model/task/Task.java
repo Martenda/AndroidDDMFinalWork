@@ -8,9 +8,9 @@ public class Task {
     private String details;
     private Category category;
     private double price;
-    private int userId;
+    private String userId;
 
-    public Task(String title, String details, Category category, double price, int userId) {
+    public Task(String title, String details, Category category, double price, String userId) {
         this.title = title;
         this.details = details;
         this.category = category;
@@ -62,11 +62,11 @@ public class Task {
         this.price = price;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

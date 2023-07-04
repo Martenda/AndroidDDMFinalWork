@@ -3,6 +3,7 @@ package com.example.taskmasters.ui.main.tasks.createService.ui.main;
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -24,6 +25,8 @@ import com.example.taskmasters.model.task.Task;
 import com.example.taskmasters.model.task.dao.TaskDAO;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseError;
+
+import java.util.Objects;
 
 public class CreateServiceFragment extends Fragment {
 
@@ -114,10 +117,11 @@ public class CreateServiceFragment extends Fragment {
         task.setDetails(description);
         task.setPrice(price);
         task.setCategory(category);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-        int userId = sharedPreferences.getInt("user_id", 0);
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("login", Context.MODE_PRIVATE);
+        String userId = sharedPreferences.getString("user_id", "none");
         task.setUserId(userId);
 
+        assert getArguments() != null;
         String taskId = getArguments().getString("taskId", "none");
         if (!taskId.equals("none")) {
             task.setId(taskId);

@@ -66,7 +66,7 @@ public class TaskDAO {
         });
     }
 
-    public List<Task> getTasksByUserId(String userId, final TaskListCallback callback) {
+    public void getTasksByUserId(String userId, final TaskListCallback callback) {
         List<Task> tasks = new ArrayList<>();
         Query query = taskRef.orderByChild("userId").equalTo(userId);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -84,7 +84,6 @@ public class TaskDAO {
                 callback.onTaskListError(databaseError);
             }
         });
-        return tasks;
     }
 
     public void getTaskById(String taskId, final TaskCallback callback) {

@@ -47,9 +47,9 @@ public class TaskContent {
 
 
         if (userType == UserType.CONSUMER.type) {
-            taskDAO.getTasksByUserId(userId, taskListCallback);
-        } else {
             taskDAO.getAllTasks(taskListCallback);
+        } else {
+            taskDAO.getTasksByUserId(userId, taskListCallback);
         }
     }
 
