@@ -1,8 +1,11 @@
 package com.example.taskmasters.ui.signIn.signIn_step_credentials;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.taskmasters.ui.login.LoginActivity;
 import com.example.taskmasters.ui.main.MainActivity;
 import com.example.taskmasters.R;
 import com.example.taskmasters.model.user.dao.UserDAO;
@@ -59,7 +63,13 @@ public class SelectCredentialsFragment extends Fragment {
 
             try {
                 userDAO.insertUser(father.getUser());
-                Intent intent = new Intent(this.getContext(), MainActivity.class);
+                Intent intent = new Intent(this.getContext(), LoginActivity.class);
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("login", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("isLoggedIn", false);
+                editor.putString("email", String.valueOf(emailText));
+                editor.putString("password", String.valueOf(passwordText));
+                editor.apply();
                 startActivity(intent);
             } catch (Exception notIgnored) {
                 System.out.println(notIgnored);
